@@ -5,6 +5,7 @@ import visibilityIcon from '../assets/svg/visibilityIcon.svg';
 
 import { getAuth, createUserWithEmailAndPassword, getProfile, updateProfile } from "firebase/auth";
 import { db } from '../firebase.config';
+import { doc, setDoc, serverTimestamp } from "firebase/firestore"; 
 
 
 function SignUp() {
@@ -30,8 +31,14 @@ function SignUp() {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      const user = userCredential.profile;
+      const user = userCredential.user;
       updateProfile(auth.currentUser, { displayName: name });
+
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+
+      await setDoc(doc(db, 'users', user.uid), formDataCopy);
 
       navigate('/');
 
