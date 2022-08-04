@@ -233,7 +233,7 @@ button {
 .signUpText {
   cursor: pointer;
 }
-@media (min-width: 1024px) {
+@media (min-width: 700px) {
   .signInBar,
   .signUpBar {
     justify-content: start;
@@ -256,7 +256,7 @@ button {
   background-color: #00cc66;
   border-radius: 50%;
 }
-@media (min-width: 1024px) {
+@media (min-width: 700px) {
   .signInButton,
   .signUpButton {
     margin-left: 3rem;
