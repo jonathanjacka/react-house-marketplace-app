@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
 import visibilityIcon from '../assets/svg/visibilityIcon.svg';
+import { toast } from 'react-toastify';
 
 
 function SignIn() {
@@ -29,11 +30,13 @@ function SignIn() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       if(userCredential.user) {
+        toast.success('Sign in successful!');
         navigate('/');
       }
 
     } catch (error) {
       console.log(error.message);
+      toast.error(`Error with sign in: email/password does not match`);
     }
   }
 

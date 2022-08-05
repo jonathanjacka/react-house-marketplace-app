@@ -9,6 +9,9 @@ import SignUp from './views/SignUp';
 import SignIn from './views/SignIn';
 import ForgotPassword from './views/ForgotPassword';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <>
@@ -23,6 +26,15 @@ function App() {
         </Routes>
         <NavBar />
       </Router>
+      <ToastContainer
+        position='top-center'
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+        theme='light'
+      />
     </>
   );
 }

@@ -7,6 +7,8 @@ import { getAuth, createUserWithEmailAndPassword, getProfile, updateProfile } fr
 import { db } from '../firebase.config';
 import { doc, setDoc, serverTimestamp } from "firebase/firestore"; 
 
+import { toast } from 'react-toastify';
+
 
 function SignUp() {
 
@@ -40,10 +42,13 @@ function SignUp() {
 
       await setDoc(doc(db, 'users', user.uid), formDataCopy);
 
+      toast.success('User sign up was successful!');
+
       navigate('/');
 
     } catch (error) {
       console.log(error);
+      toast.error(`Sign up was not successful - check to see all fields are completed correctly`);
     }
   }
 
