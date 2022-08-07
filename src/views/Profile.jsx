@@ -72,7 +72,7 @@ function Profile() {
         <div className="profileCard">
           <form>
             <input type="text" id="name" className={!changeDetails ? 'profileName' : 'profileNameActive'} disabled={!changeDetails} value={name} onChange={onChange}/>
-            <input type="email" id="email" className={'profileEmail'} value={email}/>
+            <input type="email" id="email" className={'profileEmail'} value={email} readOnly/>
           </form>
         </div>
       </main>
