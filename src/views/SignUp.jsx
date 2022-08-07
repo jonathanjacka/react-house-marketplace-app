@@ -69,7 +69,11 @@ function SignUp() {
               <input type={showPassword ? 'text' : 'password'} className="passwordInput" placeholder='Password' id="password" value={password} onChange={onChange}/>
               <img src={visibilityIcon} alt="show-password" className='showPassword' onClick={() => setShowPassword(prev => !prev)}/>
             </div>
-            <Link to="/forgot-password" className='forgotPasswordLink'>Forgot password?</Link>
+
+            <span className='forgotPasswordLink'>
+              <Link to="/forgot-password">Forgot password?</Link>
+            </span>
+            
 
             <div className="signUpBar">
               <p className="signUpText">Sign Up</p>
@@ -78,9 +82,9 @@ function SignUp() {
           </form>
 
           {/* Google Sign in */}
-          <div>
-          <Link to='/sign-in' className='registerLink'>Already registered? Sign in instead</Link>
-          </div>
+          <span className='registerLink'>
+            <Link to='/sign-in'>Already registered? Sign in instead</Link>
+          </span>
         
         </main>
       </div>
