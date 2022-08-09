@@ -9,6 +9,8 @@ import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 import { toast } from 'react-toastify';
 
+import OAuth from '../components/OAuth';
+
 
 function SignUp() {
 
@@ -81,7 +83,8 @@ function SignUp() {
             </div>
           </form>
 
-          {/* Google Sign in */}
+          <OAuth /> 
+          
           <span className='registerLink'>
             <Link to='/sign-in'>Already registered? Sign in instead</Link>
           </span>
