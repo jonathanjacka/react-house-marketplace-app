@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import Explore from './views/Explore';
 import Profile from './views/Profile';
 import Offers from './views/Offers';
+import Category from './views/Category';
 import SignUp from './views/SignUp';
 import SignIn from './views/SignIn';
 import ForgotPassword from './views/ForgotPassword';
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Explore />} />
           <Route path='/offers' element={<Offers />} />
+          <Route path='/category/:categoryName' element={<Category />} />
 
           <Route pajth='/profile' element={<PrivateRoute />}>
             <Route path='/profile' element={<Profile />} />
