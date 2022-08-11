@@ -1,19 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+//import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useAuthStatus } from '../hooks/useAuthStatus';
 
 import Spinner from '../components/Spinner';
 import { toast } from 'react-toastify';
 
 function CreateListing() {
 
-    const navigate = useNavigate();
-    const isMounted = useRef(true);
+    const { user } = useAuthStatus();
 
-    const auth = getAuth();
-
-    const { loading, setLoaing } = useState(true);
+    const { loading, setLoading } = useState(false);
     const [ geolocationEnabled, setGeolocationEnabled ] = useState(true);
     const [ formData, setFormData ] = useState({
         type: 'rent',
@@ -31,32 +29,12 @@ function CreateListing() {
         longitude: 0,
     })
 
-    useEffect(() => {
-
-        let unsubscribe;
-
-        if(isMounted) {
-            unsubscribe = onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    setFormData(formData => ({ ...formData, userRef: user.uid }));
-                } else {
-                    navigate('/sign-in');
-                }
-            });
-        }
-        //prevent memory leak - prevents component from re-rendering before previous has unmounted
-        return () => {
-            isMounted.current = false;
-            unsubscribe && unsubscribe(); //closes
-        };
-    }, [isMounted, auth, navigate]);
-
     if(loading) {
         return <Spinner />
     } else {
         return (
             <div>
-                <h2>New Listing</h2>
+                <h2>New Cool Listing</h2>
             </div>
         )
     }
