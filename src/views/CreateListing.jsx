@@ -117,7 +117,7 @@ function CreateListing() {
           })
         }
 
-        const imgUrls = await Promise.all(
+        const imageUrls = await Promise.all(
           [...images].map(img => storeImage(img))
         )
         .catch(error => {
@@ -126,7 +126,7 @@ function CreateListing() {
           return;
         });
 
-        console.log(imgUrls);
+        console.log(imageUrls);
         
         setLoading(false);
 
