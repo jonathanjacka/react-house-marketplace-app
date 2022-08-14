@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
 import visibilityIcon from '../assets/svg/visibilityIcon.svg';
 
-import { getAuth, createUserWithEmailAndPassword, getProfile, updateProfile } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db } from '../firebase.config';
 import { doc, setDoc, serverTimestamp } from "firebase/firestore"; 
 

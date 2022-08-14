@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { collection, getDocs, query, where, orderBy, limit, startAfter } from 'firebase/firestore';
 import { db } from '../firebase.config';
@@ -7,11 +8,12 @@ import { toast } from 'react-toastify';
 import Spinner from '../components/Spinner';
 import ListingItem from '../components/ListingItem';
 
-function Offers() {
+function Category() {
 
     const [ listings, setLisitings ] = useState(null);
     const [ loading, setLoading ] = useState(true);
 
+    const {categoryName} = useParams();
 
     useEffect( () => {
         const fetchLisitings = async () => {
@@ -19,7 +21,7 @@ function Offers() {
                 //get collections ref from fb
                 const listingsRef = collection(db, 'listings');
                 //set query in fb
-                const qry = query(listingsRef, where('offer', '==', true), orderBy('timestamp', 'desc', limit(10)));
+                const qry = query(listingsRef, where('type', '==', categoryName), orderBy('timestamp', 'desc', limit(10)));
                 //exe query in fb
                 const qrySnapShot = await getDocs(qry);
                 //get data from completed query
@@ -31,18 +33,17 @@ function Offers() {
                 setLoading(false);
 
             } catch (error) {
-              console.log(error.message);
                 toast.error('Unable to fetch listings: ' + error.message);
             }
         }
         fetchLisitings();
-    }, []);
+    }, [categoryName]);
 
 
   return (
     <div className='category'>
         <header>
-            <p className="pageHeader">Special offers:</p>  
+            <p className="pageHeader">{ categoryName === 'rent' ? 'Listings for rent' : 'Listings for sale'}</p>  
         </header>
 
         {loading ? <Spinner /> : listings && listings.length > 0 ? 
@@ -55,9 +56,9 @@ function Offers() {
                     </ul>
                 </main>
             </>
-         : <p>{`Currently, there are no listings with special offers.`}</p>}
+         : <p>{`Currently, there are no listings for ${categoryName}.`}</p>}
     </div>
   )
 }
 
-export default Offers;
+export default Category;
