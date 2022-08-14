@@ -6,10 +6,6 @@ import bathIcon from '../assets/svg/bathtubIcon.svg';
 
 function ListingItem( { listing: {type, imageUrls, name, location, offer, discountedPrice, regularPrice, bedrooms, bathrooms}, id, handleDelete }) {
 
-    const priceDisplay = (price) => {
-        return '$' + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (type === 'rent' && ` / month`);
-    };
-
   return (
     <li className='categoryListing'>
         <Link to={`/category/${type}/${id}`} className='categoryListingLink'>
@@ -18,7 +14,14 @@ function ListingItem( { listing: {type, imageUrls, name, location, offer, discou
 
                 <p className="categoryListingLocation">{location}</p>
                 <p className="categoryListingName">{name}</p>
-                <p className="categoryListingPrice">{offer ? priceDisplay(discountedPrice) : priceDisplay(regularPrice)}</p>
+                <p className="categoryListingPrice">$ {offer
+              ? discountedPrice
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+              : regularPrice
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            {type === 'rent' && ' / month'}</p>
                 
                 <div className="categoryListingInfoDiv">
                     <img src={bedIcon} alt='bed' />

@@ -1,24 +1,27 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 //import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useAuthStatus } from '../hooks/useAuthStatus';
 
 //image upload and storage
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { db } from '../firebase.config';
 import { v4 as uuidv4 } from 'uuid';
+import { db } from '../firebase.config';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
 import Spinner from '../components/Spinner';
 import { toast } from 'react-toastify';
 
 function CreateListing() {
 
+    const navigate = useNavigate();
+
     const { user } = useAuthStatus();
 
     const [ loading, setLoading ] = useState(false);
 
-    const [ geolocationEnabled, setGeolocationEnabled ] = useState(false);
+    const [ geolocationEnabled, setGeolocationEnabled ] = useState(true);
     const [ formData, setFormData ] = useState({
         type: 'rent',
         name: '',
@@ -78,7 +81,6 @@ function CreateListing() {
         } else {
             geolocation.lat = latitude;
             geolocation.lng = longitude;
-            location = address;
         }
 
         //image store
@@ -126,10 +128,23 @@ function CreateListing() {
           return;
         });
 
-        console.log(imageUrls);
-        
-        setLoading(false);
+        const formDataCopy = {
+          ...formData, 
+          imageUrls,
+          geolocation,
+          location: address,
+          timestamp: serverTimestamp(),
+        }
 
+        delete formDataCopy.images;
+        delete formDataCopy.address;
+        
+        !formDataCopy.offer && delete formDataCopy.discountedPrice;
+
+        const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
+        setLoading(false);
+        toast.success('Listing was successfully created!');
+        navigate(`/category/${formDataCopy.type}/${docRef.id}`);
     }
 
     const handleChange = (event) => {
