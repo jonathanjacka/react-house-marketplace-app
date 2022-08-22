@@ -6,6 +6,8 @@ import Explore from './views/Explore';
 import Category from './views/Category';
 import Offers from './views/Offers';
 
+import Listing from './views/Listing';
+
 import PrivateRoute from './components/PrivateRoute';
 import Profile from './views/Profile';
 import CreateListing from './views/CreateListing';
@@ -25,6 +27,10 @@ function App() {
           <Route path='/' element={<Explore />} />
           <Route path='/offers' element={<Offers />} />
           <Route path='/category/:categoryName' element={<Category />} />
+          <Route
+            path='/category/:categoryName/:listingId'
+            element={<Listing />}
+          />
 
           <Route path='/profile' element={<PrivateRoute />}>
             <Route path='/profile' element={<Profile />} />
