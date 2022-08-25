@@ -11,6 +11,7 @@ import Listing from './views/Listing';
 import PrivateRoute from './components/PrivateRoute';
 import Profile from './views/Profile';
 import CreateListing from './views/CreateListing';
+import Contact from './views/Contact';
 
 import SignUp from './views/SignUp';
 import SignIn from './views/SignIn';
@@ -35,6 +36,10 @@ function App() {
           <Route path='/profile' element={<PrivateRoute />}>
             <Route path='/profile' element={<Profile />} />
             <Route path='/profile/create-listing' element={<CreateListing />} />
+          </Route>
+
+          <Route path='/contact' element={<PrivateRoute />}>
+            <Route path='/contact/:landLordId' element={<Contact />} />
           </Route>
 
           <Route path='/sign-up' element={<SignUp />} />

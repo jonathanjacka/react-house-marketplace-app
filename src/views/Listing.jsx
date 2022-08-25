@@ -69,7 +69,21 @@ function Listing() {
 
             <ul className='listingDetailsList'>
             <li>{listing.bedrooms === 1 ? `1 bedroom` : `${listing.bedrooms} bedrooms`}</li>
+            <li>{listing.bathrooms === 1 ? `1 bathroom` : `${listing.bathrooms} bathrooms`}</li>
+            <li>{listing.parking && `Parking included`}</li>
+            <li>{listing.furnished && `Fully furnished`}</li>
             </ul>
+            <p className="listingLocationTitle">Location</p>
+
+            {
+                    user.uid ? (user?.uid !== listing.userRef && (
+                        <Link to={`/contact/${listing.userRef}?listingName=${listing.name}`} className='primaryButton'>Contact</Link>)) : (<Link to={`/sign-up`} className='primaryButton'>Contact</Link>)
+
+            }
+
+            
+
+            {/* MAP */}
          </div>
     </main>
   )
