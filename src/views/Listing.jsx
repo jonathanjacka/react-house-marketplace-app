@@ -8,6 +8,8 @@ import { useAuthStatus } from '../hooks/useAuthStatus';
 import Spinner from '../components/Spinner';
 import shareIcon from '../assets/svg/shareIcon.svg';
 
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+
 import { toast } from 'react-toastify';
 
 function Listing() {
@@ -75,15 +77,24 @@ function Listing() {
             </ul>
             <p className="listingLocationTitle">Location</p>
 
+            <div className="leafletContainer">
+                <MapContainer style={{height: '100%', width: '100%'}} center={[listing.geolocation.lat, listing.geolocation.lng]} zoom={13} scrollWheelZoom={false}>
+                    <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url='https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'/>
+              <Marker position={[listing.geolocation.lat, listing.geolocation.lng]}>
+                <Popup>{listing.location}</Popup>
+              </Marker>
+                </MapContainer>
+
+                
+            </div>
+
             {
-                    user.uid ? (user?.uid !== listing.userRef && (
-                        <Link to={`/contact/${listing.userRef}?listingName=${listing.name}`} className='primaryButton'>Contact</Link>)) : (<Link to={`/sign-up`} className='primaryButton'>Contact</Link>)
+                user.uid ? (user?.uid !== listing.userRef && (
+                    <Link to={`/contact/${listing.userRef}?listingName=${listing.name}`} className='primaryButton'>Contact</Link>)) : (<Link to={`/sign-up`} className='primaryButton'>Contact</Link>)
 
             }
 
-            
-
-            {/* MAP */}
          </div>
     </main>
   )
