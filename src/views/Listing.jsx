@@ -10,6 +10,14 @@ import shareIcon from '../assets/svg/shareIcon.svg';
 
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/a11y';
+
 import { toast } from 'react-toastify';
 
 function Listing() {
@@ -51,7 +59,30 @@ function Listing() {
 
   return (
     <main>
-         {/* TODO: Slider */}
+         <Swiper
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+            navigation
+            style={{ height: '350px' }}
+        >
+            {listing.imageUrls.map((url, index) => {
+            return (
+                    <SwiperSlide key={index}>
+                        <div
+                            className='swiperSlideDiv'
+                            style={{
+                                height: '100%',
+                                backgroundImage: `url(${listing.imageUrls[index]})`,
+                                backgroundPosition: 'center',
+                                backgroundSize: 'cover',
+                            }}
+                        ></div>
+                    </SwiperSlide>
+                );
+            })}
+        </Swiper>
+
          <div className="shareIconDiv" onClick={handleShareClick}>
             <img src={shareIcon} alt="share" />
          </div>
