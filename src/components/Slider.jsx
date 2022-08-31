@@ -27,8 +27,6 @@ function Slider() {
             const qry = query(listingsRef, orderBy('timestamp', 'desc'), limit(5));
             const querySnapshot = await getDocs(qry);
 
-            console.log(querySnapshot);
-
             const listings = [];
             querySnapshot.forEach(doc =>  listings.push({id: doc.id, data: doc.data()}));
 

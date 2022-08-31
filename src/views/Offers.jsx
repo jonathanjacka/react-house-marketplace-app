@@ -50,7 +50,7 @@ function Offers() {
                 //get collections ref from fb
                 const listingsRef = collection(db, 'listings');
                 //set query in fb
-                const qry = query(listingsRef, where('offer', '==', true), orderBy('timestamp', 'desc'), limit(2));
+                const qry = query(listingsRef, where('offer', '==', true), orderBy('timestamp', 'desc'), limit(10));
                 //exe query in fb
                 const qrySnapShot = await getDocs(qry);
                 //set page
