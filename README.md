@@ -1,6 +1,28 @@
-# Getting Started with Create React App
+# react-house-marketplace-app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+Client-side UI using REACT, with Firebase 9 on the backend.  This project was inspired from this [course](https://www.udemy.com/course/react-front-to-back-2022/) by Brad Traversy - 100% would recommend!  The project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+See a live version of the the project [here](https://react-house-marketplace-app-seven.vercel.app/).
+
+## Note:
+
+This project uses environment variables. To run correctly, create a .env file in the root directory, and assign the following variables:
+
+Geolocation - see [Google Cloud Services](https://cloud.google.com/)
+```
+REACT_APP_GEOCODE_API_KEY={your token here}
+```
+[Firebase](https://console.firebase.google.com/) - for use in your firebase.config.js file:
+```
+REACT_APP_FB_API_KEY={your config value here}
+REACT_APP_FB_AUTH_DOMAIN={your config value here}
+REACT_APP_FB_PROJECT_ID={your config value here}
+REACT_APP_FB_STORAGE_BUCKET={your config value here}
+REACT_APP_FB_MESSAGE_SENDER_ID={your config value here}
+REACT_APP_FB_APP_ID={your config value here}
+REACT_APP_FB_MEASUREMENT_ID={your config value here}
+```
 
 ## Available Scripts
 
