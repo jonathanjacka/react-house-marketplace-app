@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useAuthStatus } from '../hooks/useAuthStatus';
@@ -20,7 +20,7 @@ function CreateListing() {
     const { user } = useAuthStatus();
 
     const [ loading, setLoading ] = useState(false);
-
+// eslint-disable-next-line
     const [ geolocationEnabled, setGeolocationEnabled ] = useState(true);
     const [ formData, setFormData ] = useState({
         type: 'rent',

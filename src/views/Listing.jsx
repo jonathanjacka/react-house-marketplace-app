@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase.config';
@@ -26,7 +26,6 @@ function Listing() {
     const [ loading, setLoading ] = useState(true);
     const [ shareLinkCopied, setShareLinkCopied ] = useState(false);
 
-    const navigate = useNavigate();
     const { listingId } = useParams();
     const { user } = useAuthStatus();
 
@@ -37,7 +36,6 @@ function Listing() {
 
             if(docSnapShot.exists()) {
                 const data = docSnapShot.data()
-                console.log(data);
                 setListing(data);
                 setLoading(false);
             } else {
