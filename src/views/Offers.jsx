@@ -11,6 +11,37 @@ function Offers() {
 
     const [ listings, setLisitings ] = useState(null);
     const [ loading, setLoading ] = useState(true);
+    const [ lastFetchedListing , setLastFetchedListing ] = useState(null);
+
+    const handlePagination = async () => {
+        try {
+            //get collections ref from fb
+            const listingsRef = collection(db, 'listings');
+            //set query in fb
+            const qry = query(
+                listingsRef, 
+                where('offer', '==', true), 
+                orderBy('timestamp', 'desc'), 
+                startAfter(lastFetchedListing),
+                limit(10));
+            //exe query in fb
+            const qrySnapShot = await getDocs(qry);
+            //set page
+            const lastVisible = qrySnapShot.docs[qrySnapShot.docs.length - 1];
+            setLastFetchedListing(lastVisible);
+            !lastVisible && toast.info('There are no more listings on offer');
+            //get data from completed query
+            const listings = [];
+            qrySnapShot.forEach(doc => listings.push({ id: doc.id, data: doc.data()}));
+
+            //set data to local state
+            setLisitings(prevState => [...prevState, ...listings]);
+            setLoading(false);
+
+        } catch (error) {
+            toast.error('Unable to fetch listings on offer');
+        }
+    }
 
 
     useEffect( () => {
@@ -19,9 +50,12 @@ function Offers() {
                 //get collections ref from fb
                 const listingsRef = collection(db, 'listings');
                 //set query in fb
-                const qry = query(listingsRef, where('offer', '==', true), orderBy('timestamp', 'desc', limit(10)));
+                const qry = query(listingsRef, where('offer', '==', true), orderBy('timestamp', 'desc'), limit(10));
                 //exe query in fb
                 const qrySnapShot = await getDocs(qry);
+                //set page
+                const lastVisible = qrySnapShot.docs[qrySnapShot.docs.length - 1];
+                setLastFetchedListing(lastVisible);
                 //get data from completed query
                 const listings = [];
                 qrySnapShot.forEach(doc => listings.push({ id: doc.id, data: doc.data()}));
@@ -32,7 +66,7 @@ function Offers() {
 
             } catch (error) {
               console.log(error.message);
-                toast.error('Unable to fetch listings: ' + error.message);
+                toast.error('Unable to fetch listings on offer');
             }
         }
         fetchLisitings();
@@ -54,6 +88,13 @@ function Offers() {
                         )}
                     </ul>
                 </main>
+
+                <br />
+                <br />
+
+                {lastFetchedListing && (
+                        <p className='loadMore' onClick={handlePagination}>Load More</p>
+                    )}
             </>
          : <p>{`Currently, there are no listings with special offers.`}</p>}
     </div>

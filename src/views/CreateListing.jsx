@@ -42,11 +42,10 @@ function CreateListing() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setFormData(prev => ({ ...prev, userRef: user.uid }));
         
         setLoading(true);
 
-        if(discountedPrice >= regularPrice) {
+        if(Number(discountedPrice) >= Number(regularPrice)){
             setLoading(false);
             toast.error(`Discounted price must be less than regular price`);
             return;
@@ -132,6 +131,11 @@ function CreateListing() {
           ...formData, 
           imageUrls,
           geolocation,
+          userRef: user.uid,
+          regularPrice: Number(regularPrice),
+          discountedPrice: Number(discountedPrice),
+          bathrooms: Number(bathrooms),
+          bedrooms: Number(bedrooms),
           location: address,
           timestamp: serverTimestamp(),
         }
@@ -361,17 +365,21 @@ function CreateListing() {
           {offer && (
             <>
               <label className='formLabel'>Discounted Price</label>
-              <input
-                className='formInputSmall'
-                type='number'
-                id='discountedPrice'
-                value={discountedPrice}
-                onChange={handleChange}
-                min='50'
-                max='750000000'
-                required={offer}
-              />
+              <div className='formPriceDiv'>
+                <input
+                  className='formInputSmall'
+                  type='number'
+                  id='discountedPrice'
+                  value={discountedPrice}
+                  onChange={handleChange}
+                  min='50'
+                  max='750000000'
+                  required={offer}
+                />
+                {type === 'rent' && <p className='formPriceText'>$ / Month</p>}
+              </div>
             </>
+
           )}
 
           <label className='formLabel'>Images</label>
